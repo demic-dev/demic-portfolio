@@ -1,0 +1,98 @@
+#wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: radial-gradient(circle, #1d2951, #1e244c, #1e2047, #1e1b41);
+
+  z-index: 3;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 3rem;
+
+  animation: slideOut 0.3s ease-in 4.8s forwards;
+}
+
+#svgContainer path {
+  stroke-dasharray: 100%;
+  stroke-dashoffset: 100%;
+  stroke-width: 9px;
+}
+
+#svgContainer {
+  animation: fillLetters 0.3s ease 4.3s forwards;
+}
+
+#svgContainer path:nth-child(2) {
+  visibility: hidden;
+  animation: animationLetters 1.6s ease forwards 2s;
+}
+#svgContainer path:nth-child(3) {
+  visibility: hidden;
+  animation: animationLetters 1.6s ease forwards 2.2s;
+}
+#svgContainer path:nth-child(4) {
+  visibility: hidden;
+  animation: animationLetters 1.6s ease forwards 2.4s;
+}
+#svgContainer path:nth-child(5) {
+  visibility: hidden;
+  animation: animationLetters 1.6s ease forwards 2.6s;
+}
+#svgContainer path:nth-child(6) {
+  visibility: hidden;
+  animation: animationLetters 1.6s ease forwards 2.8s;
+}
+#svgContainer path:nth-child(7) {
+  visibility: hidden;
+  animation: animationLetters 1.6s ease forwards 3s;
+}
+#svgContainer path:nth-child(8) {
+  visibility: hidden;
+  animation: animationLetters 1.6s ease forwards 3.2s;
+}
+#svgContainer path:nth-child(9) {
+  visibility: hidden;
+  animation: animationLetters 1.6s ease forwards 3.4s;
+}
+
+@keyframes animationLetters {
+  100% {
+    stroke-dashoffset: 0;
+    visibility: visible;
+  }
+}
+
+@keyframes fillLetters {
+  from {
+    fill: transparent;
+  }
+  to {
+    fill: #fff;
+  }
+}
+
+@keyframes slideOut {
+  to {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes slideToLeft {
+  0% {
+    transform: translateX(45%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
