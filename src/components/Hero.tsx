@@ -78,8 +78,8 @@ const Hero: React.FC = () => {
           key={id}
           left={left}
           top={top}
-          initial={{ opacity: 0.8 }}
-          animate={{ x: 300, opacity: 0 }}
+          initial={{ opacity: 0.8, rotate: 35 }}
+          animate={{ opacity: 0, x: 300, y: 150, rotate: 35 }}
           transition={{ duration: 2.6 }}
         />
       ))}
@@ -269,12 +269,13 @@ const FallingStar = styled(motion.div)<{ top: number; left: number }>`
   top: ${({ top }) => top}px;
   left: ${({ left }) => left}px;
 
+  transform: rotate(35deg);
+
+  display: inline-block;
+
   width: 5rem;
   height: 0.16rem;
   background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), #fafafa);
-
-  /* transform: rotate(35deg); */
-  rotate: 35deg;
 
   clip-path: polygon(0 50%, 0% 50%, 100% 100%, 100% 0);
   border-top-right-radius: 2px;
