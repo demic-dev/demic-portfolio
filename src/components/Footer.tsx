@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
 
 export default Footer;
 
-const Wrapper = styled.div`
+const Wrapper = styled.footer`
   width: 100%;
 
   margin: 8rem auto 0rem auto;
@@ -52,25 +52,21 @@ const Wrapper = styled.div`
 
   display: grid;
   gap: 0.8rem;
-  justify-content: center;
   justify-items: center;
-  align-content: center;
+
+  grid-template-areas: "top-desc" "icons" "bottom-desc";
 
   @media (min-width: 1000px) {
     grid-template-areas: "top-desc icons" "bottom-desc -";
     justify-content: space-around;
     justify-items: flex-start;
-    align-items: flex-start;
-    gap: 0;
+    gap: 1.2rem;
 
     padding: 3rem 0.8rem;
   }
 `;
 
 const Description = styled.div`
-  grid-area: desc;
-  width: 100%;
-
   line-height: 24px;
 `;
 

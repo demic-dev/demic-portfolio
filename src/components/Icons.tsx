@@ -1,7 +1,7 @@
 import React from "react";
-import { IIcons } from ".";
+import { ClickType, IIcons } from ".";
 
-const Icons: React.FC<IIcons> = ({ name }) => {
+const Icons: React.FC<IIcons & ClickType> = ({ name, onClick }) => {
   switch (name) {
     case "github":
       return <GithubIcon />;
@@ -14,13 +14,15 @@ const Icons: React.FC<IIcons> = ({ name }) => {
     case "instagram":
       return <InstagramIcon />;
     case "menu":
-      return <MenuIcon />;
+      return <MenuIcon onClick={onClick} />;
+    case "close":
+      return <CloseIcon onClick={onClick} />;
   }
 };
 
 export default Icons;
 
-const GithubIcon = () => (
+const GithubIcon: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -32,7 +34,7 @@ const GithubIcon = () => (
   </svg>
 );
 
-const OpenIcon = () => (
+const OpenIcon: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -44,7 +46,7 @@ const OpenIcon = () => (
   </svg>
 );
 
-const LinkedinIcon = () => (
+const LinkedinIcon: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -56,7 +58,7 @@ const LinkedinIcon = () => (
   </svg>
 );
 
-const TwitterIcon = () => (
+const TwitterIcon: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -68,7 +70,7 @@ const TwitterIcon = () => (
   </svg>
 );
 
-const InstagramIcon = () => (
+const InstagramIcon: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -80,13 +82,26 @@ const InstagramIcon = () => (
   </svg>
 );
 
-const MenuIcon = () => (
+const MenuIcon: React.FC<ClickType> = ({ onClick }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
     height="24"
     viewBox="0 0 24 24"
+    onClick={onClick}
   >
     <path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z" />
+  </svg>
+);
+
+const CloseIcon: React.FC<ClickType> = ({ onClick }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    onClick={onClick}
+  >
+    <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
   </svg>
 );

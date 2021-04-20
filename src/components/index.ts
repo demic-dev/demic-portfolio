@@ -29,7 +29,11 @@ export {
 };
 
 export type IIcons = {
-  name: "github" | "open" | "linkedin" | "twitter" | "instagram" | "menu";
+  name: "github" | "open" | "linkedin" | "twitter" | "instagram" | "menu" | "close";
+};
+
+export type ClickType = {
+  onClick?: React.MouseEventHandler;
 };
 
 export interface ISidebarItems {
