@@ -38,6 +38,7 @@ const Description = styled.div`
 
 const FormContainer = styled.form.attrs({
   "aria-label": "Form per contattarmi",
+  "data-netlify": "true",
 })`
   display: grid;
   gap: 1rem;
