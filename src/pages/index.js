@@ -23,8 +23,6 @@ const IndexPage = () => {
 
   return (
     <>
-      {/* <title>Home Page</title> */}
-      {/* <StartAnimation handleAnimationEnd={handleAnimationEnd} /> */}
       <Layout style={{ display: isVisible ? "none" : "block" }}>
         <Main>
           <Hero />
@@ -38,6 +36,9 @@ const IndexPage = () => {
     </>
   );
 };
+
+{/* <title>Home Page</title> */}
+{/* <StartAnimation handleAnimationEnd={handleAnimationEnd} /> */}
 
 export default IndexPage;
 
