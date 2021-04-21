@@ -41,67 +41,62 @@ const Navbar: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
 
   const handleOpenPanel = () => setIsNavOpen((val) => !val);
-  if (typeof window !== "undefined")
-    return (
-      <>
-        <AnimatePresence>
-          {isNavOpen && (
-            <NavbarPanel
-              key="navbar"
-              variants={variant}
-              initial={"initialExit"}
-              animate={"animate"}
-              exit={"initialExit"}
-            >
-              <NavbarPanelHeadingContainer>
-                <Heading>demic.dev</Heading>
-                <Icons name="close" onClick={handleOpenPanel} />
-              </NavbarPanelHeadingContainer>
-              <NavbarContainer>
-                {LINKS.map(({ id, name, to }) => (
-                  <NavbarItemContainer>
-                    <Link
-                      to={to}
-                      onClick={handleOpenPanel}
-                      key={id}
-                      title={name}
-                    >
-                      <NavbarItem>{name}</NavbarItem>
-                    </Link>
-                    <NavbarItemLine />
-                  </NavbarItemContainer>
-                ))}
-              </NavbarContainer>
-              <NavbarPanelSocialContainer>
-                <a href="https://github.com/demic-dev">
-                  <Icons name="github" />
-                </a>
-                <a href="https://www.linkedin.com/in/michele-de-cillis/">
-                  <Icons name="linkedin" />
-                </a>
-                <a href="https://twitter.com/demic_dev">
-                  <Icons name="twitter" />
-                </a>
-                <a href="https://www.instagram.com/demic.dev/">
-                  <Icons name="instagram" />
-                </a>
-              </NavbarPanelSocialContainer>
-            </NavbarPanel>
-          )}
-        </AnimatePresence>
-        <Wrapper>
-          <Heading>demic.dev</Heading>
-          <ActionsContainer>
-            {LINKS.map(({ id, name, to }) => (
-              <Link to={to} key={id} title={name}>
-                <Text>{name}</Text>
-              </Link>
-            ))}
-            <Icons name="menu" onClick={handleOpenPanel} />
-          </ActionsContainer>
-        </Wrapper>
-      </>
-    );
+
+  return (
+    <>
+      <AnimatePresence>
+        {isNavOpen && (
+          <NavbarPanel
+            key="navbar"
+            variants={variant}
+            initial={"initialExit"}
+            animate={"animate"}
+            exit={"initialExit"}
+          >
+            <NavbarPanelHeadingContainer>
+              <Heading>demic.dev</Heading>
+              <Icons name="close" onClick={handleOpenPanel} />
+            </NavbarPanelHeadingContainer>
+            <NavbarContainer>
+              {LINKS.map(({ id, name, to }) => (
+                <NavbarItemContainer>
+                  <Link to={to} onClick={handleOpenPanel} key={id} title={name}>
+                    <NavbarItem>{name}</NavbarItem>
+                  </Link>
+                  <NavbarItemLine />
+                </NavbarItemContainer>
+              ))}
+            </NavbarContainer>
+            <NavbarPanelSocialContainer>
+              <a href="https://github.com/demic-dev">
+                <Icons name="github" />
+              </a>
+              <a href="https://www.linkedin.com/in/michele-de-cillis/">
+                <Icons name="linkedin" />
+              </a>
+              <a href="https://twitter.com/demic_dev">
+                <Icons name="twitter" />
+              </a>
+              <a href="https://www.instagram.com/demic.dev/">
+                <Icons name="instagram" />
+              </a>
+            </NavbarPanelSocialContainer>
+          </NavbarPanel>
+        )}
+      </AnimatePresence>
+      <Wrapper>
+        <Heading>demic.dev</Heading>
+        <ActionsContainer>
+          {LINKS.map(({ id, name, to }) => (
+            <Link to={to} key={id} title={name}>
+              <Text>{name}</Text>
+            </Link>
+          ))}
+          <Icons name="menu" onClick={handleOpenPanel} />
+        </ActionsContainer>
+      </Wrapper>
+    </>
+  );
 };
 
 export default Navbar;
