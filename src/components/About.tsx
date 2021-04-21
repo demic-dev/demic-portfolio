@@ -33,15 +33,6 @@ const TECHNOLOGIES = [
 ];
 
 //Michele De Cillis, CTA cliccabile che rimanda a Linkedin
-const ABOUT_TEXT_ONE = `Ciao! Sono Michele De Cillis, ho 19 anni e vengo da Trani, in Puglia.`;
-const ABOUT_TEXT_TWO = ` Ho iniziato a programmare a scuola, quando avevo quindici anni e da allora ho cercato di migliorarmi sempre di più.`;
-const ABOUT_TEXT_THREE = ` Ho trovato il mio posto nello sviluppo web e mobile... ecc.`;
-
-// Mi chiamo Michele De Cillis, ho diciannove anni e ho iniziato a programmare da quando ne avevo quindici.
-//  Sviluppo siti web e applicazioni.
-// Conosco(trovare sinonimi) svariati linguaggi, ma conosco bene ed utilizzo quotidianamente Javascript, HTML e CSS.
-//  Grazie ad essi mi sono spostato su altri linguaggi e framework simili, fondamentali per lo sviluppo web e mobile: React, React Native, NodeJS, TypeScript, GatsbyJS, GraphQL.
-//  Sono sempre alla ricerca di qualcosa di nuovo, che mi permetta di aumentare sempre di più la qualità di ciò che faccio, per ottenere i migliori risultati.
 
 const About: React.FC = () => {
   return (
@@ -49,9 +40,14 @@ const About: React.FC = () => {
       <Heading title={"About"} />
       <Content>
         <ContentContainer>
-          {ABOUT_TEXT_ONE}
-          {ABOUT_TEXT_TWO}
-          {ABOUT_TEXT_THREE}
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          molestie, odio at efficitur volutpat, ligula elit vehicula orci, nec
+          luctus justo ligula a eros. Vestibulum dignissim mauris quis erat
+          consectetur malesuada. Suspendisse vitae mollis lorem, id porttitor
+          nulla. Vivamus nec pulvinar neque. Nullam purus nunc, dapibus eget
+          vehicula at, maximus vitae nisi. Aliquam sed mauris eu est vulputate
+          mattis. Quisque dignissim tempus massa eget ultricies. Fusce suscipit
+          felis et maximus porttitor.
         </ContentContainer>
         <TechnologiesWrapper>
           <TechnologiesText>
@@ -90,6 +86,10 @@ const ContentContainer = styled.div.attrs({
 
   line-height: 1.2rem;
   letter-spacing: 1px;
+
+  a {
+    letter-spacing: 2px;
+  }
 `;
 
 const TechnologiesWrapper = styled.div.attrs({

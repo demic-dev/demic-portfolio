@@ -8,10 +8,13 @@ import uuid from "uuid";
 
 import star_two from "../images/Star2.png";
 
+const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+const windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
 const generateSingleStar = (x?: number, y?: number): IStar => {
   const id = uuid.v4();
-  const top = y || Math.floor(Math.random() * window.innerHeight);
-  const left = x || Math.floor(Math.random() * window.innerWidth);
+  const top = y || Math.floor(Math.random() * windowHeight);
+  const left = x || Math.floor(Math.random() * windowWidth);
   const animDuration = Math.random() * (7 - 2) + 2;
   return { top, left, id, animDuration };
 };

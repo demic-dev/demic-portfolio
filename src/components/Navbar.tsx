@@ -5,6 +5,8 @@ import { Link } from "gatsby";
 
 import { Icons } from ".";
 
+const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+
 const LINKS = [
   {
     id: "about",
@@ -28,64 +30,78 @@ const LINKS = [
   },
 ];
 
+const variant = {
+  initialExit: {
+    x: windowWidth,
+  },
+  animate: { x: 0 },
+};
+
 const Navbar: React.FC = () => {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
 
   const handleOpenPanel = () => setIsNavOpen((val) => !val);
-
-  return (
-    <>
-      <AnimatePresence>
-        {isNavOpen && (
-          <NavbarPanel
-            initial={{ x: window.innerWidth }}
-            animate={{ x: 0 }}
-            exit={{ x: window.innerWidth }}
-          >
-            <NavbarPanelHeadingContainer>
-              <Heading>demic.dev</Heading>
-              <Icons name="close" onClick={handleOpenPanel} />
-            </NavbarPanelHeadingContainer>
-            <NavbarContainer>
-              {LINKS.map(({ id, name, to }) => (
-                <NavbarItemContainer>
-                  <Link to={to} onClick={handleOpenPanel} key={id} title={name}>
-                    <NavbarItem>{name}</NavbarItem>
-                  </Link>
-                  <NavbarItemLine />
-                </NavbarItemContainer>
-              ))}
-            </NavbarContainer>
-            <NavbarPanelSocialContainer>
-              <Link to="https://github.com/demic-dev">
-                <Icons name="github" />
+  if (typeof window !== "undefined")
+    return (
+      <>
+        <AnimatePresence>
+          {isNavOpen && (
+            <NavbarPanel
+              key="navbar"
+              variants={variant}
+              initial={"initialExit"}
+              animate={"animate"}
+              exit={"initialExit"}
+            >
+              <NavbarPanelHeadingContainer>
+                <Heading>demic.dev</Heading>
+                <Icons name="close" onClick={handleOpenPanel} />
+              </NavbarPanelHeadingContainer>
+              <NavbarContainer>
+                {LINKS.map(({ id, name, to }) => (
+                  <NavbarItemContainer>
+                    <Link
+                      to={to}
+                      onClick={handleOpenPanel}
+                      key={id}
+                      title={name}
+                    >
+                      <NavbarItem>{name}</NavbarItem>
+                    </Link>
+                    <NavbarItemLine />
+                  </NavbarItemContainer>
+                ))}
+              </NavbarContainer>
+              <NavbarPanelSocialContainer>
+                <a href="https://github.com/demic-dev">
+                  <Icons name="github" />
+                </a>
+                <a href="https://www.linkedin.com/in/michele-de-cillis/">
+                  <Icons name="linkedin" />
+                </a>
+                <a href="https://twitter.com/demic_dev">
+                  <Icons name="twitter" />
+                </a>
+                <a href="https://www.instagram.com/demic.dev/">
+                  <Icons name="instagram" />
+                </a>
+              </NavbarPanelSocialContainer>
+            </NavbarPanel>
+          )}
+        </AnimatePresence>
+        <Wrapper>
+          <Heading>demic.dev</Heading>
+          <ActionsContainer>
+            {LINKS.map(({ id, name, to }) => (
+              <Link to={to} key={id} title={name}>
+                <Text>{name}</Text>
               </Link>
-              <Link to="https://www.linkedin.com/in/michele-de-cillis/">
-                <Icons name="linkedin" />
-              </Link>
-              <Link to="https://twitter.com/demic_dev">
-                <Icons name="twitter" />
-              </Link>
-              <Link to="https://www.instagram.com/demic.dev/">
-                <Icons name="instagram" />
-              </Link>
-            </NavbarPanelSocialContainer>
-          </NavbarPanel>
-        )}
-      </AnimatePresence>
-      <Wrapper>
-        <Heading>demic.dev</Heading>
-        <ActionsContainer>
-          {LINKS.map(({ id, name, to }) => (
-            <Link to={to} key={id} title={name}>
-              <Text>{name}</Text>
-            </Link>
-          ))}
-          <Icons name="menu" onClick={handleOpenPanel} />
-        </ActionsContainer>
-      </Wrapper>
-    </>
-  );
+            ))}
+            <Icons name="menu" onClick={handleOpenPanel} />
+          </ActionsContainer>
+        </Wrapper>
+      </>
+    );
 };
 
 export default Navbar;

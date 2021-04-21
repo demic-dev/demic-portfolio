@@ -12,6 +12,8 @@ import {
 
 import styled from "styled-components";
 
+console.log("%cEhm... Questo non dovresti vederlo", "font-size: 1.4rem; font-weight: bold;");
+
 const IndexPage = () => {
   const [isVisible, setIsVisible] = useState(false);
 

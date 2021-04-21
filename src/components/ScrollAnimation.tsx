@@ -35,8 +35,8 @@ const ScrollAnimation: React.FC = () => {
       version="1.1"
       x="0px"
       y="0px"
-      width="6.5rem"
-      height="6.5rem"
+      width={"6.5rem"}
+      height={"6.5rem"}
       variants={arrowVariants}
       animate="active"
       initial="initial"
