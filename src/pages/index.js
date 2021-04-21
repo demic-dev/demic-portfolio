@@ -8,11 +8,15 @@ import {
   StartAnimation,
   Footer,
   Blog,
+  SEO,
 } from "../components";
 
 import styled from "styled-components";
 
-console.log("%cEhm... Questo non dovresti vederlo", "font-size: 1.4rem; font-weight: bold;");
+console.log(
+  "%cEhm... Questo non dovresti vederlo",
+  "font-size: 1.4rem; font-weight: bold;"
+);
 
 const IndexPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,6 +27,7 @@ const IndexPage = () => {
 
   return (
     <>
+      <SEO title="Home" lang="it" />
       <Layout style={{ display: isVisible ? "none" : "block" }}>
         <Main>
           <Hero />
@@ -37,8 +42,12 @@ const IndexPage = () => {
   );
 };
 
-{/* <title>Home Page</title> */}
-{/* <StartAnimation handleAnimationEnd={handleAnimationEnd} /> */}
+{
+  /* <title>Home Page</title> */
+}
+{
+  /* <StartAnimation handleAnimationEnd={handleAnimationEnd} /> */
+}
 
 export default IndexPage;
 

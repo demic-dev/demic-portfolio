@@ -10,7 +10,7 @@ const ContactMe: React.FC = () => {
       <Description>
         Vuoi discutere di un nuovo progetto? Ecc... Scrivimi, ecc.
       </Description>
-      <FormContainer>
+      <FormContainer name="contact-me">
         <InputContainer>
           <InputLabel htmlFor="name">Nome</InputLabel>
           <Input type="text" name="name" />

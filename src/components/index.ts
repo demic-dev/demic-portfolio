@@ -9,6 +9,7 @@ import ScrollAnimation from "./ScrollAnimation";
 import Icons from "./Icons";
 import ContactMe from "./ContactMe";
 import Footer from "./Footer";
+import SEO from "./SEO";
 
 import { Wrapper, Heading } from "./Utils";
 
@@ -26,10 +27,18 @@ export {
   Icons,
   ContactMe,
   Footer,
+  SEO,
 };
 
 export type IIcons = {
-  name: "github" | "open" | "linkedin" | "twitter" | "instagram" | "menu" | "close";
+  name:
+    | "github"
+    | "open"
+    | "linkedin"
+    | "twitter"
+    | "instagram"
+    | "menu"
+    | "close";
 };
 
 export type ClickType = {

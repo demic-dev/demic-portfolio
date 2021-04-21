@@ -1,6 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: "demic-portfolio",
+    title: "demic.dev",
+    author: "Michele De Cillis",
+    description: "Il portfolio di Michele De Cillis, un web e mobile developer.",
   },
   plugins: [
     "gatsby-plugin-styled-components",
