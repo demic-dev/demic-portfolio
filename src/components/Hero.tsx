@@ -69,7 +69,9 @@ const Hero: React.FC = () => {
           <HeroPhraseContainer>
             un <HeroChangeText /> developer
           </HeroPhraseContainer>
-          <CTAHero>Hire me</CTAHero>
+          <CTAHero as="a" href="#contact-me">
+            CONTATTAMI
+          </CTAHero>
         </HeadHeadingContainer>
       </HeroContainer>
       <ScrollAnimation />
@@ -237,6 +239,8 @@ const CTAHero = styled.button`
 
   font-weight: 800;
 
+  text-decoration: none;
+
   &:hover {
     background: orange;
     transform: translateY(3px);
@@ -259,10 +263,7 @@ const StarImg = styled.div<{ top: number; left: number; animDuration: number }>`
 
   transform: translateX(100%);
 
-  animation: ${starBlink} ${({ animDuration }) =>
-  animDuration}s linear infinite;
-
-  /* animation: ${starMotion} 1s infinite linear; */
+  animation: ${starBlink} ${({ animDuration }) => animDuration}s linear infinite;
 
   z-index: 0;
 `;

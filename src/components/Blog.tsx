@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { Wrapper } from ".";
+import { PostItem, Wrapper } from ".";
+import { graphql, useStaticQuery } from "gatsby";
 
 const variants = {
   enter: (direction: number) => {
@@ -26,97 +27,127 @@ const variants = {
   },
 };
 
-const POSTS = [
-  {
-    id: "1",
-    title: "Post #1",
-    description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox.`,
-  },
-  {
-    id: "2",
-    title: "Post #2",
-    description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps.`,
-  },
-  {
-    id: "3",
-    title: "Post #3",
-    description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex!`,
-  },
-];
+// const POSTS = [
+//   {
+//     id: "1",
+//     title: "Post #1",
+//     description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox.`,
+//   },
+//   {
+//     id: "2",
+//     title: "Post #2",
+//     description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps.`,
+//   },
+//   {
+//     id: "3",
+//     title: "Post #3",
+//     description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex!`,
+//   },
+// ];
 
 const swipeConfidenceThreshold = 10000;
 const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
+const parsePost = (data: any): PostItem[] => {
+  return data.nodes.map((singlePost) => ({
+    description: singlePost.description.description,
+    id: singlePost.id,
+    title: singlePost.title,
+  }));
+};
+
 const Blog: React.FC = () => {
   const [[index, direction], setIndex] = useState<number[]>([0, 0]);
+  const [items, setItems] = useState<PostItem[]>();
 
-  const handlePaginationClick = (index: number) =>
+  const handlePaginationClick = (newIndex: number) =>
     setIndex((curIndex) => [
-      index > POSTS.length
+      newIndex > items.length
         ? 0
-        : index === -1
-        ? POSTS.length - 1
-        : index === POSTS.length
+        : newIndex === -1
+        ? items.length - 1
+        : newIndex === items.length
         ? 0
-        : index,
-      curIndex > index[0] ? 1 : -1,
+        : newIndex,
+      curIndex[0] > newIndex ? -1 : 1,
     ]);
 
-  return (
-    <Wrapper id="articles">
-      <BlogContainer>
-        <PostsContainer custom={direction} initial={false}>
-          <div style={{ position: "relative", height: 150 }}>
-            <PostContainer
-              drag="x"
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-              }}
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={1}
-              onDragEnd={(e, { offset, velocity }) => {
-                const swipe = swipePower(offset.x, velocity.x);
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      allContentfulBlogPostMinified(limit: 4, sort: { fields: title }) {
+        nodes {
+          id
+          title
+          description {
+            description
+          }
+        }
+      }
+    }
+  `);
 
-                if (swipe < -swipeConfidenceThreshold) {
-                  handlePaginationClick(index + 1);
-                } else if (swipe > swipeConfidenceThreshold) {
-                  handlePaginationClick(index - 1);
-                }
-              }}
-              key={POSTS[index].id}
-              style={{ color: "#fff" }}
-            >
-              <PostHeading>{POSTS[index].title}</PostHeading>
-              <PostDescription>{POSTS[index].description}</PostDescription>
-              <PostReadMore href="#">Leggi di pi&ugrave;...</PostReadMore>
-            </PostContainer>
-          </div>
-          <ButtonsContainer>
-            {[...new Array(POSTS.length)].map((val, curIndex) => (
-              <BlogPageButton
-                style={{
-                  backgroundColor:
-                    index !== curIndex
-                      ? "rgba(255, 255, 255, 0.5)"
-                      : "rgb(255, 255, 255)",
+  useEffect(() => {
+    setItems(parsePost(data.allContentfulBlogPostMinified));
+  }, [data]);
+
+  if (items)
+    return (
+      <Wrapper id="articles">
+        <BlogContainer>
+          <PostsContainer custom={direction} initial={false}>
+            <div style={{ position: "relative", height: 150 }}>
+              <PostContainer
+                drag="x"
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 },
                 }}
-                disabled={curIndex === index}
-                onClick={() => handlePaginationClick(curIndex)}
-              />
-            ))}
-          </ButtonsContainer>
-        </PostsContainer>
-      </BlogContainer>
-    </Wrapper>
-  );
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(_, { offset, velocity }) => {
+                  const swipe = swipePower(offset.x, velocity.x);
+
+                  if (swipe < -swipeConfidenceThreshold) {
+                    handlePaginationClick(index + 1);
+                  } else if (swipe > swipeConfidenceThreshold) {
+                    handlePaginationClick(index - 1);
+                  }
+                }}
+                key={items[index].id}
+                style={{ color: "#fff" }}
+              >
+                <PostHeading>{items[index].title}</PostHeading>
+                <PostDescription>{items[index].description}</PostDescription>
+                <PostReadMore href="#">Leggi di pi&ugrave;...</PostReadMore>
+              </PostContainer>
+            </div>
+            <ButtonsContainer>
+              {[...new Array(items.length)].map((_, curIndex) => (
+                <BlogPageButton
+                  style={{
+                    backgroundColor:
+                      index !== curIndex
+                        ? "rgba(255, 255, 255, 0.5)"
+                        : "rgb(255, 255, 255)",
+                  }}
+                  disabled={curIndex === index}
+                  onClick={() => handlePaginationClick(curIndex)}
+                />
+              ))}
+            </ButtonsContainer>
+          </PostsContainer>
+        </BlogContainer>
+      </Wrapper>
+    );
+
+  return <div></div>;
 };
 
 export default Blog;
@@ -168,11 +199,13 @@ const PostReadMore = styled.a`
 `;
 
 const ButtonsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(${POSTS.length + 1}, auto);
-  gap: 0.3rem;
+  display: flex;
   align-items: center;
   justify-content: center;
+
+  *:not(:first-child) {
+    margin-left: 0.3rem;
+  }
 `;
 
 const BlogPageButton = styled.button`

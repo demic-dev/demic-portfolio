@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
 
-import { Wrapper, Heading, Icons } from "./index";
+import { Wrapper, Heading, Icons, ProjectItem } from "./index";
+import { graphql, useStaticQuery } from "gatsby";
+
+const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+
+const variant = {
+  initialExit: {
+    x: windowWidth,
+  },
+  animate: { x: 0 },
+};
 
 const PROJ = [
   {
@@ -24,32 +35,116 @@ const PROJ = [
   },
 ];
 
+const parseProjects = (data: any): ProjectItem[] => {
+  return data.nodes.map((singleProject) => ({
+    id: singleProject.id,
+    title: singleProject.title,
+    description: singleProject.description.childMarkdownRemark.html,
+    body: singleProject.body.raw,
+    image: singleProject.coverImage.fluid.src,
+  }));
+};
+
 const Projects: React.FC = () => {
+  const [items, setItems] = useState<ProjectItem[]>([]);
+  const [dataModal, setDataModal] = useState<{
+    isVisible: boolean;
+    data?: ProjectItem;
+  }>({
+    isVisible: false,
+  });
+
+  const openModal = (data: ProjectItem) => {
+    setDataModal({
+      isVisible: true,
+      data,
+    });
+  };
+
+  const closeModal = () => {
+    setDataModal({
+      isVisible: false,
+    });
+  };
+
+  const data = useStaticQuery(graphql`
+    {
+      allContentfulProjects(limit: 5) {
+        nodes {
+          id
+          title
+          body {
+            raw
+          }
+          description {
+            childMarkdownRemark {
+              html
+            }
+          }
+          coverImage {
+            fluid {
+              src
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  useEffect(() => {
+    setItems(parseProjects(data.allContentfulProjects));
+  }, [data]);
+
+  console.log(items);
+
   return (
-    <Wrapper id="projects">
-      <Heading title={"Progetti"} />
-      <ProjectsContainer>
-        {PROJ.map((val) => (
-          <ProjectContainer name={val.title} key={val.id}>
-            <ProjectImage src={val.image} alt="Image" />
-            <ProjectContentContainer>
-              <div>
-                <ProjectHeading>{val.title}</ProjectHeading>
-                <ProjectDescription>{val.description}</ProjectDescription>
-              </div>
-              <ProjectFooterContainer>
-                <a>
-                  <Icons name="github" />
-                </a>
-                <a>
-                  <Icons name="open" />
-                </a>
-              </ProjectFooterContainer>
-            </ProjectContentContainer>
-          </ProjectContainer>
-        ))}
-      </ProjectsContainer>
-    </Wrapper>
+    <>
+      <Wrapper id="projects">
+        <Heading title={"Progetti"} />
+        <ProjectsContainer>
+          {items.map((val) => (
+            <ProjectContainer /* name={val.title} */ key={val.id}>
+              <ProjectImage src={val.image} alt="Image" />
+              <ProjectContentContainer>
+                <div>
+                  <ProjectHeading>{val.title}</ProjectHeading>
+                  <ProjectDescription
+                    dangerouslySetInnerHTML={{ __html: val.description }}
+                  />
+                </div>
+                <ProjectFooterContainer>
+                  <a>
+                    <Icons name="github" />
+                  </a>
+                  <a>
+                    <Icons name="open" onClick={() => openModal(val)} />
+                  </a>
+                </ProjectFooterContainer>
+              </ProjectContentContainer>
+            </ProjectContainer>
+          ))}
+        </ProjectsContainer>
+      </Wrapper>
+      <AnimatePresence>
+        {dataModal.isVisible && (
+          <ModalContainer
+            variants={variant}
+            initial={"initialExit"}
+            animate={"animate"}
+            exit={"initialExit"}
+          >
+            <ModalHeadingContainer>
+              <ModalHeading>{dataModal.data?.title!}</ModalHeading>
+              <Icons name="close" onClick={closeModal} />
+            </ModalHeadingContainer>
+            <ModalBody>
+              <ModalBodyImage src={dataModal.data?.image!} alt="Img" />
+              <div dangerouslySetInnerHTML={{__html: dataModal.data?.body!}} />
+            </ModalBody>
+          </ModalContainer>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
@@ -154,4 +249,57 @@ const ProjectFooterContainer = styled.div`
   a {
     color: #fff;
   }
+`;
+
+const ModalContainer = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  padding: 2rem 3rem;
+  margin: 0 auto;
+
+  height: 100%;
+  width: 100%;
+
+  background-color: rgba(0, 0, 0, 0.95);
+
+  overflow: scroll;
+  z-index: 3;
+
+  color: #fff;
+
+  svg {
+    fill: #fff;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+`;
+
+const ModalHeadingContainer = styled.div`
+  display: flex;
+  width: 100%;
+
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ModalHeading = styled.h4`
+  font-size: 1.2rem;
+  font-weight: bold;
+`;
+
+const ModalBody = styled.div`
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+`;
+
+const ModalBodyImage = styled.img`
+  object-fit: cover;
+  width: 100%;
+  height: 11rem;
 `;

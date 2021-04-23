@@ -1,8 +1,11 @@
+require("dotenv").config();
+
 module.exports = {
   siteMetadata: {
     title: "demic.dev",
     author: "Michele De Cillis",
-    description: "Il portfolio di Michele De Cillis, un web e mobile developer.",
+    description:
+      "Il portfolio di Michele De Cillis, un web e mobile developer.",
   },
   plugins: [
     "gatsby-plugin-styled-components",
@@ -24,5 +27,13 @@ module.exports = {
       },
       __key: "images",
     },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `fq3dn6hlv6t0`,
+        accessToken: process.env.GATSBY_CONTENTFUL_API,
+      },
+    },
+    "gatsby-transformer-remark",
   ],
 };

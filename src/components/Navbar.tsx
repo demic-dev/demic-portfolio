@@ -128,6 +128,10 @@ const Wrapper = styled.nav`
   svg {
     fill: #fff;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
   ${Text} {
@@ -183,6 +187,10 @@ const NavbarPanel = styled(motion.div)`
   svg {
     fill: #fff;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 `;
 

@@ -6,7 +6,7 @@ const Icons: React.FC<IIcons & ClickType> = ({ name, onClick }) => {
     case "github":
       return <GithubIcon />;
     case "open":
-      return <OpenIcon />;
+      return <OpenIcon onClick={onClick} />;
     case "linkedin":
       return <LinkedinIcon />;
     case "twitter":
@@ -17,6 +17,8 @@ const Icons: React.FC<IIcons & ClickType> = ({ name, onClick }) => {
       return <MenuIcon onClick={onClick} />;
     case "close":
       return <CloseIcon onClick={onClick} />;
+    case "arrow":
+      return <ArrowIcon onClick={onClick} />;
   }
 };
 
@@ -34,15 +36,15 @@ const GithubIcon: React.FC = () => (
   </svg>
 );
 
-const OpenIcon: React.FC = () => (
+const OpenIcon: React.FC<ClickType> = ({ onClick }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
     height="24"
     viewBox="0 0 24 24"
-    aria-label="Espandi"
+    onClick={onClick}
   >
-    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z" />
+    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-4.5 14c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5zm4.5 0c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5zm4.5 0c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5z" />
   </svg>
 );
 
@@ -103,5 +105,17 @@ const CloseIcon: React.FC<ClickType> = ({ onClick }) => (
     onClick={onClick}
   >
     <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+  </svg>
+);
+
+const ArrowIcon: React.FC<ClickType> = ({ onClick }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    onClick={onClick}
+  >
+    <path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12 12-5.373 12-12zm-18.005-1.568l1.415-1.414 4.59 4.574 4.579-4.574 1.416 1.414-5.995 5.988-6.005-5.988z" />
   </svg>
 );

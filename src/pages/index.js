@@ -5,10 +5,10 @@ import {
   About,
   Projects,
   ContactMe,
-  StartAnimation,
+  // StartAnimation,
   Footer,
   Blog,
-  SEO,
+  Seo,
 } from "../components";
 
 import styled from "styled-components";
@@ -19,15 +19,15 @@ console.log(
 );
 
 const IndexPage = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, /* setIsVisible */] = useState(false);
 
-  const handleAnimationEnd = (e) => {
-    e.animationName === "fillLetters" && setIsVisible(false);
-  };
+  // const handleAnimationEnd = (e) => {
+  //   e.animationName === "fillLetters" && setIsVisible(false);
+  // };
 
   return (
     <>
-      <SEO title="Home" lang="it" />
+      <Seo title="Home" lang="it" />
       <Layout style={{ display: isVisible ? "none" : "block" }}>
         <Main>
           <Hero />
@@ -42,12 +42,7 @@ const IndexPage = () => {
   );
 };
 
-{
-  /* <title>Home Page</title> */
-}
-{
-  /* <StartAnimation handleAnimationEnd={handleAnimationEnd} /> */
-}
+/* <StartAnimation handleAnimationEnd={handleAnimationEnd} /> */
 
 export default IndexPage;
 

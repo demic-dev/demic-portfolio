@@ -9,7 +9,8 @@ import ScrollAnimation from "./ScrollAnimation";
 import Icons from "./Icons";
 import ContactMe from "./ContactMe";
 import Footer from "./Footer";
-import SEO from "./SEO";
+import Seo from "./SEO";
+import Accordion from "./Accordion";
 
 import { Wrapper, Heading } from "./Utils";
 
@@ -27,7 +28,8 @@ export {
   Icons,
   ContactMe,
   Footer,
-  SEO,
+  Seo,
+  Accordion,
 };
 
 export type IIcons = {
@@ -38,7 +40,8 @@ export type IIcons = {
     | "twitter"
     | "instagram"
     | "menu"
-    | "close";
+    | "close"
+    | "arrow";
 };
 
 export type ClickType = {
@@ -56,6 +59,43 @@ export interface IStar {
   top: number;
   left: number;
   animDuration?: number;
+}
+
+export interface AccordionItem {
+  title: string;
+  body: string;
+}
+
+export interface AccordionProps {
+  items: AccordionItem[];
+}
+
+export interface AboutItemProps {
+  index: number;
+  item: AccordionItem;
+  isExpanded: false | number;
+  setExpanded: React.Dispatch<React.SetStateAction<number | false>>;
+}
+
+export interface TechnologiesItem {
+  id: string;
+  name: string;
+  logo: string;
+  href: string;
+}
+
+export interface PostItem {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface ProjectItem {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  body: string;
 }
 
 export const STAR_NUMBER = 30;
