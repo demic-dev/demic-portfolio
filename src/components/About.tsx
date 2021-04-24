@@ -10,25 +10,22 @@ import {
   TechnologiesItem,
 } from "./index";
 
-
-//Michele De Cillis, CTA cliccabile che rimanda a Linkedin
-
 const parseAbout = (data: any): AccordionItem[] => {
   return data.nodes.map((singleAbout: any) => ({
     title: singleAbout.title,
-    body: singleAbout.body.raw,
+    body: singleAbout.body.childMarkdownRemark.html,
   }));
 };
 
 const parseTechnologies = (data: any): TechnologiesItem[] => {
   return data.nodes.map((singleTech: any) => {
-    console.log(singleTech.logo)
-    return({
-    name: singleTech.title,
-    id: singleTech.id,
-    href: singleTech.link,
-    logo: singleTech?.logo?.fixed?.src || "",
-  })});
+    return {
+      name: singleTech.title,
+      id: singleTech.id,
+      href: singleTech.link,
+      logo: singleTech.logo.fixed.src || "",
+    };
+  });
 };
 
 const About: React.FC = () => {
@@ -38,12 +35,14 @@ const About: React.FC = () => {
   >([]);
 
   const data = useStaticQuery(graphql`
-    query {
+    {
       allContentfulAbout(limit: 3, sort: { fields: title }) {
         nodes {
           title
           body {
-            raw
+            childMarkdownRemark {
+              html
+            }
           }
         }
       }
@@ -66,33 +65,32 @@ const About: React.FC = () => {
     setItemsAbout(parseAbout(data.allContentfulAbout));
     setItemsTechnologies(parseTechnologies(data.allContentfulTechnologies));
   }, [data]);
-  
-    return (
-      <Wrapper id="about">
-        <Heading title={"About"} />
-        <Content>
-          <ContentContainer>
-            <Accordion items={itemsAbout} />
-          </ContentContainer>
-          <TechnologiesWrapper>
-            <TechnologiesText>
-              Alcune tecnlogie che utilizzo ogni giorno:
-            </TechnologiesText>
-            <TechnologiesContainer>
-              {itemsTechnologies.map(({ id, name, logo, href }) => (
-                <TechnologyContainer key={id}>
-                  <TechnologyImage src={logo} alt={name} />
-                  <TechnologyName href={href} target="_blank">
-                    {name}
-                  </TechnologyName>
-                </TechnologyContainer>
-              ))}
-            </TechnologiesContainer>
-          </TechnologiesWrapper>
-        </Content>
-      </Wrapper>
-    );
 
+  return (
+    <Wrapper id="about">
+      <Heading title={"About"} />
+      <Content>
+        <ContentContainer>
+          <Accordion items={itemsAbout} />
+        </ContentContainer>
+        <TechnologiesWrapper>
+          <TechnologiesText>
+            Alcune tecnlogie che utilizzo ogni giorno:
+          </TechnologiesText>
+          <TechnologiesContainer>
+            {itemsTechnologies.map(({ id, name, logo, href }) => (
+              <TechnologyContainer key={id}>
+                <TechnologyImage src={logo} alt={name} />
+                <TechnologyName href={href} target="_blank">
+                  {name}
+                </TechnologyName>
+              </TechnologyContainer>
+            ))}
+          </TechnologiesContainer>
+        </TechnologiesWrapper>
+      </Content>
+    </Wrapper>
+  );
 };
 
 export default About;

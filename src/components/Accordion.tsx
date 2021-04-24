@@ -38,16 +38,14 @@ const AccordionItem: React.FC<AboutItemProps> = ({
             animate="open"
             exit="collapsed"
             variants={{
-              open: { opacity: 1, height: "100%" },
-              collapsed: { opacity: 0, height: 0 },
+              open: { opacity: 1 },
+              collapsed: { opacity: 0 },
             }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            // dangerouslySetInnerHTML={{
-            //   __html: '<a href="google.com">Prova</a>',
-            // }}
-          >
-            {item.body}
-          </AccordionItemBody>
+            dangerouslySetInnerHTML={{
+              __html: item.body,
+            }}
+          ></AccordionItemBody>
         )}
       </AnimatePresence>
     </>
@@ -99,7 +97,7 @@ const AccordionItemHeader = styled.h3`
 const ArrowIconContainer = styled.div<{ isSelected: boolean }>`
   svg {
     fill: #fff;
-    transition: 0.3s ease-in-out;
+    transition: 0.8s ease-in-out;
     transform: ${({ isSelected }) =>
       isSelected ? "rotate(180deg)" : "rotate(0deg)"};
   }

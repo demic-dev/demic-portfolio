@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { Wrapper, Heading, Icons, ProjectItem } from "./index";
 import { graphql, useStaticQuery } from "gatsby";
 
+import more from "../images/plus.svg";
+
 const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
 
 const variant = {
@@ -14,33 +16,12 @@ const variant = {
   animate: { x: 0 },
 };
 
-const PROJ = [
-  {
-    id: "project-1",
-    title: "Progetto #1",
-    image: "https://placeimg.com/640/480/tech",
-    description: `In questo progetto, in pratica...`,
-  },
-  {
-    id: "project-2",
-    title: "Progetto #2",
-    image: "https://placeimg.com/640/480/tech",
-    description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex!`,
-  },
-  {
-    id: "project-3",
-    title: "Progetto #3",
-    image: "https://placeimg.com/640/480/tech",
-    description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex!`,
-  },
-];
-
 const parseProjects = (data: any): ProjectItem[] => {
   return data.nodes.map((singleProject) => ({
     id: singleProject.id,
     title: singleProject.title,
     description: singleProject.description.childMarkdownRemark.html,
-    body: singleProject.body.raw,
+    body: singleProject.body.childMarkdownRemark.html,
     image: singleProject.coverImage.fluid.src,
   }));
 };
@@ -74,7 +55,9 @@ const Projects: React.FC = () => {
           id
           title
           body {
-            raw
+            childMarkdownRemark {
+              html
+            }
           }
           description {
             childMarkdownRemark {
@@ -95,15 +78,16 @@ const Projects: React.FC = () => {
     setItems(parseProjects(data.allContentfulProjects));
   }, [data]);
 
-  console.log(items);
-
   return (
     <>
       <Wrapper id="projects">
         <Heading title={"Progetti"} />
         <ProjectsContainer>
           {items.map((val) => (
-            <ProjectContainer /* name={val.title} */ key={val.id}>
+            <ProjectContainer
+              onClick={() => openModal(val)}
+              /* name={val.title} */ key={val.id}
+            >
               <ProjectImage src={val.image} alt="Image" />
               <ProjectContentContainer>
                 <div>
@@ -112,14 +96,7 @@ const Projects: React.FC = () => {
                     dangerouslySetInnerHTML={{ __html: val.description }}
                   />
                 </div>
-                <ProjectFooterContainer>
-                  <a>
-                    <Icons name="github" />
-                  </a>
-                  <a>
-                    <Icons name="open" onClick={() => openModal(val)} />
-                  </a>
-                </ProjectFooterContainer>
+                <ProjectFooterContainer></ProjectFooterContainer>
               </ProjectContentContainer>
             </ProjectContainer>
           ))}
@@ -134,12 +111,12 @@ const Projects: React.FC = () => {
             exit={"initialExit"}
           >
             <ModalHeadingContainer>
-              <ModalHeading>{dataModal.data?.title!}</ModalHeading>
+              <ModalHeading>{dataModal.data.title}</ModalHeading>
               <Icons name="close" onClick={closeModal} />
             </ModalHeadingContainer>
             <ModalBody>
-              <ModalBodyImage src={dataModal.data?.image!} alt="Img" />
-              <div dangerouslySetInnerHTML={{__html: dataModal.data?.body!}} />
+              <ModalBodyImage src={dataModal.data.image} alt="Img" />
+              <div dangerouslySetInnerHTML={{ __html: dataModal.data.body }} />
             </ModalBody>
           </ModalContainer>
         )}
@@ -168,6 +145,11 @@ const ProjectContainer = styled.div.attrs<{ name: string }>(({ name }) => {
   };
 })`
   position: relative;
+
+  transition: 0.3s ease-in-out;
+  :hover {
+    transform: scale(1.05);
+  }
 `;
 
 const ProjectContentContainer = styled.div`
@@ -175,6 +157,7 @@ const ProjectContentContainer = styled.div`
   width: 100%;
   height: 100%;
 
+  cursor: pointer;
   overflow: hidden;
 
   display: grid;
@@ -182,7 +165,11 @@ const ProjectContentContainer = styled.div`
 
   gap: 0.8rem;
 
-  background: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
+  background-image: url(${more});
+  background-repeat: no-repeat;
+  background-size: 15%;
+  background-position: 250% center;
 
   top: 0;
   left: 0;
@@ -193,7 +180,9 @@ const ProjectContentContainer = styled.div`
 
   padding: 2rem 1.4rem;
 
-  transition: 0.7s ease;
+  transition: 0.7s ease, 0.5s ease-in-out;
+  transition-property: background-color color fill, background-position;
+  will-change: transform;
 
   svg {
     fill: #fff;
@@ -201,7 +190,8 @@ const ProjectContentContainer = styled.div`
   }
 
   :hover {
-    background: rgba(204, 214, 246, 0.9);
+    background-color: rgba(204, 214, 246, 0.9);
+    background-position: center center;
     color: #020202;
   }
   :hover svg {
@@ -209,6 +199,10 @@ const ProjectContentContainer = styled.div`
   }
   :hover a {
     color: #020202;
+  }
+  :active,
+  :focus {
+    background-position: -200% center;
   }
 `;
 
