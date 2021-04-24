@@ -1,7 +1,9 @@
+import { AnimatePresence, motion } from "framer-motion";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
 
-import { Wrapper, Heading } from "./index";
+import { Heading } from "./index";
+import { Wrapper } from "./Utils";
 
 function encode(data) {
   return Object.keys(data)
@@ -11,12 +13,28 @@ function encode(data) {
 
 const ContactMe: React.FC = () => {
   const [formData, setFormData] = useState<object>();
+  const [showResult, setIsShowingResult] = useState<{
+    type?: boolean;
+    text?: string;
+    isActive: boolean;
+  }>({
+    isActive: false,
+  });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData((oldData) => ({
       ...oldData,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleResult = (type: boolean, text: string) => {
+    setIsShowingResult({ type: type, text: text, isActive: true });
+    setTimeout(() => {
+      setIsShowingResult({ isActive: false });
+    }, 3250);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -29,12 +47,12 @@ const ContactMe: React.FC = () => {
         ...formData,
       }),
     })
-      .then(() => alert("ok!"))
-      .catch((error) => alert(error));
+      .then(() => handleResult(true, "Ti risponderò il prima possibile!"))
+      .catch(() => handleResult(false, "Scrivimi su ..."));
   };
 
   return (
-    <Wrapper id="contact-me">
+    <RelativeWrapper id="contact-me">
       <Heading title="Contattami" />
       <Description>
         Vuoi discutere di un nuovo progetto? Ecc... Scrivimi, ecc.
@@ -60,11 +78,28 @@ const ContactMe: React.FC = () => {
         </InputContainer>
         <SendButton type="submit" value="Invia" />
       </FormContainer>
-    </Wrapper>
+      {showResult.isActive && (
+        <AnimatePresence>
+          <SubmissionResult>
+            {showResult.text}
+            <SubmissionLine
+              initial={{ width: "100%" }}
+              animate={{ width: 0 }}
+              transition={{ duration: 4, ease: "easeInOut", repeat: Infinity }}
+              exit={{ opacity: 0 }}
+            />
+          </SubmissionResult>
+        </AnimatePresence>
+      )}
+    </RelativeWrapper>
   );
 };
 
 export default ContactMe;
+
+const RelativeWrapper = styled(Wrapper)`
+  position: relative;
+`;
 
 const Description = styled.div`
   font-size: 1rem;
@@ -143,4 +178,35 @@ const SendButton = styled.input.attrs({
   :hover {
     border-bottom-color: #fff;
   }
+`;
+
+const SubmissionResult = styled.div`
+  position: absolute;
+  bottom: -4rem;
+
+  width: 100%;
+  height: 56px;
+
+  border-radius: 4px;
+  background-color: #0d8050;
+  /* background-color: #DB3737; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  color: #fff;
+
+  overflow: hidden;
+`;
+
+const SubmissionLine = styled(motion.div)`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  height: 6px;
+
+  background-color: #fff;
 `;

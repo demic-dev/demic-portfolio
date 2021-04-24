@@ -19,15 +19,24 @@ console.log(
 );
 
 const IndexPage = () => {
-  const [isVisible, /* setIsVisible */] = useState(false);
+  const [isVisible /* setIsVisible */] = useState(false);
 
   // const handleAnimationEnd = (e) => {
   //   e.animationName === "fillLetters" && setIsVisible(false);
   // };
-
+  
   return (
     <>
-      <Seo title="Home" lang="it" />
+      <Seo
+        title="Home"
+        lang="it"
+        meta={[
+          {
+            name: "google-site-verification",
+            content: "r4D84aKED3g2-coyMmr7B3HW6Ml-BBSwGYRSRlVT1pY",
+          },
+        ]}
+      />
       <Layout style={{ display: isVisible ? "none" : "block" }}>
         <Main>
           <Hero />
