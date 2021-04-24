@@ -1,27 +1,62 @@
-import React from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
 
 import { Wrapper, Heading } from "./index";
 
+function encode(data) {
+  return Object.keys(data)
+    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+}
+
 const ContactMe: React.FC = () => {
+  const [formData, setFormData] = useState<object>();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((oldData) => ({
+      ...oldData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({
+        "form-name": "contact-me",
+        ...formData,
+      }),
+    })
+      .then(() => alert("ok!"))
+      .catch((error) => alert(error));
+  };
+
   return (
     <Wrapper id="contact-me">
       <Heading title="Contattami" />
       <Description>
         Vuoi discutere di un nuovo progetto? Ecc... Scrivimi, ecc.
       </Description>
-      <FormContainer name="contact-me">
+      <FormContainer
+        name="contact-me"
+        data-netlify-honeypot="bot-field"
+        data-netlify="true"
+        onSubmit={handleSubmit}
+      >
+        <input type="hidden" name="bot-field" onChange={handleChange} />
         <InputContainer>
           <InputLabel htmlFor="name">Nome</InputLabel>
-          <Input type="text" name="name" />
+          <Input type="text" name="name" onChange={handleChange} />
         </InputContainer>
         <InputContainer>
           <InputLabel htmlFor="email">Email</InputLabel>
-          <Input type="email" name="email" />
+          <Input type="email" name="email" onChange={handleChange} />
         </InputContainer>
         <InputContainer>
           <InputLabel htmlFor="message">Messaggio</InputLabel>
-          <Input name="message" as="textarea" />
+          <Input name="message" as="textarea" onChange={handleChange} />
         </InputContainer>
         <SendButton type="submit" value="Invia" />
       </FormContainer>
@@ -38,7 +73,6 @@ const Description = styled.div`
 
 const FormContainer = styled.form.attrs({
   "aria-label": "Form per contattarmi",
-  "data-netlify": "true",
 })`
   display: grid;
   gap: 1rem;
