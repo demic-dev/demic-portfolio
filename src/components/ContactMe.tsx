@@ -34,7 +34,7 @@ const ContactMe: React.FC = () => {
     setIsShowingResult({ type: type, text: text, isActive: true });
     setTimeout(() => {
       setIsShowingResult({ isActive: false });
-    }, 3250);
+    }, 4000);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -47,8 +47,21 @@ const ContactMe: React.FC = () => {
         ...formData,
       }),
     })
-      .then(() => handleResult(true, "Ti risponderò il prima possibile!"))
-      .catch(() => handleResult(false, "Scrivimi su ..."));
+      .then((response) => {
+        if (response.status === 200)
+          handleResult(true, "Ho ricevuto il messaggio. Ti risponderò il prima possibile!");
+        else
+          handleResult(
+            false,
+            'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:info@demic.dev">qui</a>.'
+          );
+      })
+      .catch(() =>
+        handleResult(
+          false,
+          'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:info@demic.dev">qui</a>.'
+        )
+      );
   };
 
   return (
@@ -78,19 +91,25 @@ const ContactMe: React.FC = () => {
         </InputContainer>
         <SendButton type="submit" value="Invia" />
       </FormContainer>
-      {showResult.isActive && (
-        <AnimatePresence>
-          <SubmissionResult>
-            {showResult.text}
+      <AnimatePresence>
+        {showResult.isActive && (
+          <SubmissionResult
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            type={showResult.type}
+          >
+            <div dangerouslySetInnerHTML={{ __html: showResult.text }} />
             <SubmissionLine
               initial={{ width: "100%" }}
               animate={{ width: 0 }}
-              transition={{ duration: 4, ease: "easeInOut", repeat: Infinity }}
+              transition={{ duration: 4, ease: "easeInOut" }}
               exit={{ opacity: 0 }}
             />
           </SubmissionResult>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </RelativeWrapper>
   );
 };
@@ -180,21 +199,22 @@ const SendButton = styled.input.attrs({
   }
 `;
 
-const SubmissionResult = styled.div`
+const SubmissionResult = styled(motion.div)<{ type: boolean }>`
   position: absolute;
   bottom: -4rem;
 
   width: 100%;
-  height: 56px;
+  padding: 1rem 1.2rem calc(1rem + 6px) 1.2rem;
 
   border-radius: 4px;
-  background-color: #0d8050;
-  /* background-color: #DB3737; */
+  background-color: ${({ type }) => (type ? "#0d8050" : "#DB3737")};
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  line-height: 110%;
+  text-align: center;
   font-weight: bold;
   color: #fff;
 

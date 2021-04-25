@@ -5,7 +5,7 @@ module.exports = {
     title: "demic.dev",
     author: "Michele De Cillis",
     description:
-      "Il portfolio di Michele De Cillis, un web e mobile developer.",
+      "Il portfolio di Michele De Cillis, web e mobile developer.",
   },
   plugins: [
     "gatsby-plugin-styled-components",
