@@ -71,49 +71,55 @@ const ContactMe: React.FC = () => {
   return (
     <RelativeWrapper id="contact-me">
       <Heading title="Contattami" />
-      <Description>
-        Vuoi discutere di un nuovo progetto? Ecc... Scrivimi, ecc.
-      </Description>
-      <FormContainer
-        name="contact-me"
-        data-netlify-honeypot="bot-field"
-        data-netlify="true"
-        onSubmit={handleSubmit}
-      >
-        <input type="hidden" name="bot-field" onChange={handleChange} />
-        <InputContainer>
-          <InputLabel htmlFor="name">Nome</InputLabel>
-          <Input type="text" name="name" onChange={handleChange} />
-        </InputContainer>
-        <InputContainer>
-          <InputLabel htmlFor="email">Email</InputLabel>
-          <Input type="email" name="email" onChange={handleChange} />
-        </InputContainer>
-        <InputContainer>
-          <InputLabel htmlFor="message">Messaggio</InputLabel>
-          <Input name="message" as="textarea" onChange={handleChange} />
-        </InputContainer>
-        <SendButton type="submit" value="Invia" />
-      </FormContainer>
-      <AnimatePresence>
-        {showResult.isActive && (
-          <SubmissionResult
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            type={showResult.type}
-          >
-            <div dangerouslySetInnerHTML={{ __html: showResult.text }} />
-            <SubmissionLine
-              initial={{ width: "100%" }}
-              animate={{ width: 0 }}
-              transition={{ duration: 4, ease: "easeInOut" }}
+      <ContentWrapper>
+        <Description>
+          Hai un progetto in mente?
+          <br />
+          Posso aiutarti nella sua realizzazione!
+          <br /><br />
+          Compila il form accanto e parlami del tuo progetto. Ti risponderò il prima possibile.
+        </Description>
+        <FormContainer
+          name="contact-me"
+          data-netlify-honeypot="bot-field"
+          data-netlify="true"
+          onSubmit={handleSubmit}
+        >
+          <input type="hidden" name="bot-field" onChange={handleChange} />
+          <InputContainer>
+            <InputLabel htmlFor="name">Nome</InputLabel>
+            <Input type="text" name="name" onChange={handleChange} />
+          </InputContainer>
+          <InputContainer>
+            <InputLabel htmlFor="email">Email</InputLabel>
+            <Input type="email" name="email" onChange={handleChange} />
+          </InputContainer>
+          <InputContainer>
+            <InputLabel htmlFor="message">Messaggio</InputLabel>
+            <Input name="message" as="textarea" onChange={handleChange} />
+          </InputContainer>
+          <SendButton type="submit" value="Invia" />
+        </FormContainer>
+        <AnimatePresence>
+          {showResult.isActive && (
+            <SubmissionResult
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-            />
-          </SubmissionResult>
-        )}
-      </AnimatePresence>
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              type={showResult.type}
+            >
+              <div dangerouslySetInnerHTML={{ __html: showResult.text }} />
+              <SubmissionLine
+                initial={{ width: "100%" }}
+                animate={{ width: 0 }}
+                transition={{ duration: 4, ease: "easeInOut" }}
+                exit={{ opacity: 0 }}
+              />
+            </SubmissionResult>
+          )}
+        </AnimatePresence>
+      </ContentWrapper>
     </RelativeWrapper>
   );
 };
@@ -122,6 +128,15 @@ export default ContactMe;
 
 const RelativeWrapper = styled(Wrapper)`
   position: relative;
+`;
+
+const ContentWrapper = styled.div`
+  display: grid;
+  gap: 1rem;
+
+  @media (min-width: 1000px) {
+    grid-template-columns: 40% auto;
+  }
 `;
 
 const Description = styled.div`
