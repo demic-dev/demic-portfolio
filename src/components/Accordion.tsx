@@ -53,7 +53,7 @@ const AccordionItem: React.FC<AboutItemProps> = ({
 };
 
 const Accordion = ({ items }: AccordionProps) => {
-  const [expanded, setExpanded] = useState<false | number>(items.length - 1);
+  const [expanded, setExpanded] = useState<false | number>(2);
 
   return (
     <Wrappper>

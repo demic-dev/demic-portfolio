@@ -55,6 +55,7 @@ const parsePost = (data: any): PostItem[] => {
     description: singlePost.description.description,
     id: singlePost.id,
     title: singlePost.title,
+    readMore: singlePost.readMore,
   }));
 };
 
@@ -75,7 +76,7 @@ const Blog: React.FC = () => {
     ]);
 
   const data = useStaticQuery(graphql`
-    query MyQuery {
+    {
       allContentfulBlogPostMinified(limit: 4, sort: { fields: title }) {
         nodes {
           id
@@ -83,6 +84,7 @@ const Blog: React.FC = () => {
           description {
             description
           }
+          readMore
         }
       }
     }
@@ -125,7 +127,9 @@ const Blog: React.FC = () => {
               >
                 <PostHeading>{items[index].title}</PostHeading>
                 <PostDescription>{items[index].description}</PostDescription>
-                <PostReadMore href="#">Leggi di pi&ugrave;...</PostReadMore>
+                <PostReadMore href={items[index].readMore} target="_blank">
+                  Leggi di pi&ugrave;...
+                </PostReadMore>
               </PostContainer>
             </div>
             <ButtonsContainer>

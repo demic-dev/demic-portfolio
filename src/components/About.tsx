@@ -23,7 +23,7 @@ const parseTechnologies = (data: any): TechnologiesItem[] => {
       name: singleTech.title,
       id: singleTech.id,
       href: singleTech.link,
-      logo: singleTech.logo.fixed.src || "",
+      logo: singleTech.logo.fixed.src,
     };
   });
 };
@@ -132,7 +132,6 @@ const TechnologiesText = styled.div`
 
 const TechnologiesContainer = styled.ul`
   display: grid;
-  /* grid-template-columns: repeat(2, auto); */
   gap: 1rem;
 `;
 
@@ -151,6 +150,8 @@ const TechnologyImage = styled.img`
 
   height: 1.6rem;
   width: 1.6rem;
+
+  object-fit: contain;
 `;
 
 const TechnologyName = styled.a`

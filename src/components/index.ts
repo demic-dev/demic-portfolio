@@ -88,6 +88,7 @@ export interface PostItem {
   id: string;
   title: string;
   description: string;
+  readMore: string;
 }
 
 export interface ProjectItem {
