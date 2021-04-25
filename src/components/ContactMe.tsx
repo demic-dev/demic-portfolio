@@ -12,7 +12,7 @@ function encode(data) {
 }
 
 const ContactMe: React.FC = () => {
-  const [formData, setFormData] = useState<object>();
+  const [formData, setFormData] = useState<{ [key: string]: string }>();
   const [showResult, setIsShowingResult] = useState<{
     type?: boolean;
     text?: string;
@@ -39,29 +39,33 @@ const ContactMe: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({
-        "form-name": "contact-me",
-        ...formData,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 200)
-          handleResult(true, "Ho ricevuto il messaggio. Ti risponderò il prima possibile!");
-        else
+    if (formData?.name && formData?.email && formData?.message)
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({
+          "form-name": "contact-me",
+          ...formData,
+        }),
+      })
+        .then((response) => {
+          if (response.status === 200)
+            handleResult(
+              true,
+              "Ho ricevuto il messaggio. Ti risponderò il prima possibile!"
+            );
+          else
+            handleResult(
+              false,
+              'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:info@demic.dev">qui</a>.'
+            );
+        })
+        .catch(() =>
           handleResult(
             false,
             'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:info@demic.dev">qui</a>.'
-          );
-      })
-      .catch(() =>
-        handleResult(
-          false,
-          'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:info@demic.dev">qui</a>.'
-        )
-      );
+          )
+        );
   };
 
   return (
