@@ -77,7 +77,7 @@ const Blog: React.FC = () => {
 
   const data = useStaticQuery(graphql`
     {
-      allContentfulBlogPostMinified(limit: 4, sort: { fields: title }) {
+      allContentfulBlogPostMinified(limit: 4, sort: { fields: createdAt }) {
         nodes {
           id
           title

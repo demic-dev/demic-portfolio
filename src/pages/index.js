@@ -24,9 +24,12 @@ const IndexPage = () => {
   // const handleAnimationEnd = (e) => {
   //   e.animationName === "fillLetters" && setIsVisible(false);
   // };
-  
+
   return (
     <>
+      <div>
+        <em>ciao</em>
+      </div>
       <Seo
         title="Home"
         lang="it"

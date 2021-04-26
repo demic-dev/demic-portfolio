@@ -36,7 +36,7 @@ const About: React.FC = () => {
 
   const data = useStaticQuery(graphql`
     {
-      allContentfulAbout(limit: 3, sort: { fields: title }) {
+      allContentfulAbout(limit: 3, sort: { fields: createdAt }) {
         nodes {
           title
           body {
@@ -71,6 +71,10 @@ const About: React.FC = () => {
       <Heading title={"About"} />
       <Content>
         <ContentContainer>
+          <SubAccordionContainer>
+            Sono Michele De Cillis, ho 19 anni e sono un programmatore web e
+            mobile.
+          </SubAccordionContainer>
           <Accordion items={itemsAbout} />
         </ContentContainer>
         <TechnologiesWrapper>
@@ -100,8 +104,13 @@ const Content = styled.div`
   gap: 1rem;
 `;
 
+const SubAccordionContainer = styled.div`
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+`;
+
 const ContentContainer = styled.div.attrs({
-  "aria-label": "Descrizione di demic",
+  "aria-label": "Descrizione",
 })`
   padding: 2rem 0;
   font-size: 1.2rem;
@@ -133,6 +142,10 @@ const TechnologiesText = styled.div`
 const TechnologiesContainer = styled.ul`
   display: grid;
   gap: 1rem;
+
+  @media (min-width: 1000px) {
+    grid-template-columns: repeat(2, auto);
+  }
 `;
 
 const TechnologyContainer = styled.ul`

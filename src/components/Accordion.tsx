@@ -105,4 +105,7 @@ const ArrowIconContainer = styled.div<{ isSelected: boolean }>`
 
 const AccordionItemBody = styled(motion.div)`
   padding: 0.6rem 1rem;
+  
+  text-align: justify;
+  line-height: 120%;
 `;
