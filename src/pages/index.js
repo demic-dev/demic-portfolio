@@ -27,9 +27,6 @@ const IndexPage = () => {
 
   return (
     <>
-      <div>
-        <em>ciao</em>
-      </div>
       <Seo
         title="Home"
         lang="it"
