@@ -258,7 +258,7 @@ const ModalContainer = styled(motion.div)`
 
   background-color: rgba(0, 0, 0, 0.95);
 
-  overflow: scroll;
+  overflow-y: auto;
   z-index: 3;
 
   color: #fff;
