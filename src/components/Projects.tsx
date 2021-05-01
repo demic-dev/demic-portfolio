@@ -84,7 +84,7 @@ const Projects: React.FC = () => {
           {items.map((val) => (
             <ProjectContainer
               onClick={() => openModal(val)}
-              /* name={val.title} */ key={val.id}
+              name={val.title} key={val.id}
             >
               <ProjectImage src={val.image} alt="Image" />
               <ProjectContentContainer>
@@ -199,7 +199,7 @@ const ProjectImage = styled.img`
 
   border-radius: 4px;
 
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 const ProjectDescription = styled.div`
