@@ -5,8 +5,6 @@ import { Link } from "gatsby";
 
 import { Icons } from ".";
 
-const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-
 const LINKS = [
   {
     id: "about",
@@ -32,7 +30,7 @@ const LINKS = [
 
 const variant = {
   initialExit: {
-    x: windowWidth,
+    x: "100%",
   },
   animate: { x: 0 },
 };

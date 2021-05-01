@@ -7,11 +7,9 @@ import { graphql, useStaticQuery } from "gatsby";
 
 import more from "../images/plus.svg";
 
-const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-
 const variant = {
   initialExit: {
-    x: windowWidth,
+    x: "100%",
   },
   animate: { x: 0 },
 };
@@ -110,14 +108,15 @@ const Projects: React.FC = () => {
             animate={"animate"}
             exit={"initialExit"}
           >
-            <ModalHeadingContainer>
-              <ModalHeading>{dataModal.data.title}</ModalHeading>
-              <Icons name="close" onClick={closeModal} />
-            </ModalHeadingContainer>
-            <ModalBody>
-              <ModalBodyImage src={dataModal.data.image} alt="Img" />
-              <div dangerouslySetInnerHTML={{ __html: dataModal.data.body }} />
-            </ModalBody>
+            <ModalContentContainer>
+              <ModalHeadingContainer>
+                <ModalHeading>{dataModal.data.title}</ModalHeading>
+                <Icons name="close" onClick={closeModal} />
+              </ModalHeadingContainer>
+              <ModalBody
+                dangerouslySetInnerHTML={{ __html: dataModal.data.body }}
+              ></ModalBody>
+            </ModalContentContainer>
           </ModalContainer>
         )}
       </AnimatePresence>
@@ -131,7 +130,7 @@ const ProjectsContainer = styled.div`
   padding-top: 2rem;
   display: grid;
 
-  row-gap: 4rem;
+  gap: 4rem;
 
   @media (min-width: 1000px) {
     grid-template-columns: 1fr 1fr;
@@ -157,52 +156,35 @@ const ProjectContentContainer = styled.div`
   width: 100%;
   height: 100%;
 
+  display: grid;
+  justify-content: center;
+  align-items: center;
+
   cursor: pointer;
   overflow: hidden;
-
-  display: grid;
-  align-content: space-between;
-
-  gap: 0.8rem;
 
   background-color: rgba(0, 0, 0, 0.6);
   background-image: url(${more});
   background-repeat: no-repeat;
-  background-size: 15%;
-  background-position: 250% center;
+  background-size: 10%;
+  background-position: 150% 150%;
 
   top: 0;
   left: 0;
 
-  border-radius: 6px;
+  border-radius: 4px;
 
   color: #fff;
 
-  padding: 2rem 1.4rem;
+  padding: 1rem 0.7rem 1rem 1.4rem;
 
-  transition: 0.7s ease, 0.5s ease-in-out;
-  transition-property: background-color color fill, background-position;
+  transition: 0.7s ease, 0.2s ease-in-out, 0.3s ease;
+  transition-property: background-color color fill, background-position,
+    background-size;
   will-change: transform;
 
-  svg {
-    fill: #fff;
-    transition: 0.7s ease;
-  }
-
   :hover {
-    background-color: rgba(204, 214, 246, 0.9);
-    background-position: center center;
-    color: #020202;
-  }
-  :hover svg {
-    fill: #020202;
-  }
-  :hover a {
-    color: #020202;
-  }
-  :active,
-  :focus {
-    background-position: -200% center;
+    background-position: right bottom;
   }
 `;
 
@@ -213,7 +195,11 @@ const ProjectHeading = styled.h3`
 
 const ProjectImage = styled.img`
   width: 100%;
-  border-radius: 6px;
+  height: 10rem;
+
+  border-radius: 4px;
+
+  object-fit: cover;
 `;
 
 const ProjectDescription = styled.div`
@@ -273,6 +259,22 @@ const ModalContainer = styled(motion.div)`
   }
 `;
 
+const ModalContentContainer = styled.div`
+  width: 100%;
+  margin: 0 auto;
+
+  word-spacing: 4px;
+  
+  @media (min-width: 1000px) {
+    width: 55%;
+  }
+
+  img {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+`;
+
 const ModalHeadingContainer = styled.div`
   display: flex;
   width: 100%;
@@ -288,12 +290,4 @@ const ModalHeading = styled.h4`
 
 const ModalBody = styled.div`
   margin-top: 2rem;
-  display: grid;
-  gap: 1rem;
-`;
-
-const ModalBodyImage = styled.img`
-  object-fit: cover;
-  width: 100%;
-  height: 11rem;
 `;
