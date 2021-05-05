@@ -57,13 +57,13 @@ const ContactMe: React.FC = () => {
           else
             handleResult(
               false,
-              'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:info@demic.dev">qui</a>.'
+              'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:decillismicheledeveloper@gmail.com">qui</a>.'
             );
         })
         .catch(() =>
           handleResult(
             false,
-            'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:info@demic.dev">qui</a>.'
+            'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:decillismicheledeveloper@gmail.com">qui</a>.'
           )
         );
   };
