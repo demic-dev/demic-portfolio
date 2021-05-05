@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
+import scrollTo from 'gatsby-plugin-smoothscroll';
 import { Link } from "gatsby";
+
 
 import { Icons } from ".";
 
@@ -72,11 +74,8 @@ const Navbar: React.FC = () => {
               <a href="https://www.linkedin.com/in/michele-de-cillis/">
                 <Icons name="linkedin" />
               </a>
-              <a href="https://twitter.com/demic_dev">
-                <Icons name="twitter" />
-              </a>
-              <a href="https://www.instagram.com/demic.dev/">
-                <Icons name="instagram" />
+              <a href="https://www.npmjs.com/~demic.dev">
+                <Icons name="npm" fill={"#000"} background={"#fff"} />
               </a>
             </NavbarPanelSocialContainer>
           </NavbarPanel>
@@ -86,9 +85,9 @@ const Navbar: React.FC = () => {
         <Heading>demic.dev</Heading>
         <ActionsContainer>
           {LINKS.map(({ id, name, to }) => (
-            <Link to={to} key={id} title={name}>
+            <div onClick={() => scrollTo(to)} key={id} title={name}>
               <Text>{name}</Text>
-            </Link>
+            </div>
           ))}
           <Icons name="menu" onClick={handleOpenPanel} />
         </ActionsContainer>

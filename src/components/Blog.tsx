@@ -60,7 +60,7 @@ const parsePost = (data: any): PostItem[] => {
 };
 
 const Blog: React.FC = () => {
-  const [[index, direction], setIndex] = useState<number[]>([0, 0]);
+  const [[index, direction], setIndex] = useState<number[]>([1, 0]);
   const [items, setItems] = useState<PostItem[]>();
 
   const handlePaginationClick = (newIndex: number) =>

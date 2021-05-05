@@ -33,20 +33,14 @@ export {
 };
 
 export type IIcons = {
-  name:
-    | "github"
-    | "open"
-    | "linkedin"
-    | "twitter"
-    | "instagram"
-    | "menu"
-    | "close"
-    | "arrow";
+  name: "github" | "open" | "linkedin" | "menu" | "npm" | "close" | "arrow";
 };
 
 export type ClickType = {
   onClick?: React.MouseEventHandler;
 };
+
+export type IconColors = { fill?: string; background?: string };
 
 export interface ISidebarItems {
   name: string;

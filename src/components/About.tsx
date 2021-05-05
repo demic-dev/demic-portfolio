@@ -122,6 +122,7 @@ const ContentContainer = styled.div.attrs({
 
   a {
     letter-spacing: 2px;
+    color: #fff;
   }
 `;
 

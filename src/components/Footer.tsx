@@ -18,11 +18,8 @@ const Footer: React.FC = () => {
         <Link href="https://www.linkedin.com/in/michele-de-cillis/">
           <Icons name="linkedin" />
         </Link>
-        <Link href="https://twitter.com/demic_dev">
-          <Icons name="twitter" />
-        </Link>
-        <Link href="https://www.instagram.com/demic.dev/">
-          <Icons name="instagram" />
+        <Link href="https://www.npmjs.com/~demic.dev">
+          <Icons name="npm" fill={"orange"} background={"#000"} />
         </Link>
       </IconsContainer>
       <Description style={{ gridArea: "bottom-desc" }}>

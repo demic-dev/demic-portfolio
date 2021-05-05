@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+
 import {
   Layout,
   Hero,
@@ -10,8 +12,6 @@ import {
   Blog,
   Seo,
 } from "../components";
-
-import styled from "styled-components";
 
 console.log(
   "%cEhm... Questo non dovresti vederlo",

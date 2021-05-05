@@ -195,7 +195,7 @@ const ProjectHeading = styled.h3`
 
 const ProjectImage = styled.img`
   width: 100%;
-  height: 10rem;
+  height: 14rem;
 
   border-radius: 4px;
 

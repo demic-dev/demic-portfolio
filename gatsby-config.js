@@ -10,6 +10,7 @@ module.exports = {
   plugins: [
     "gatsby-plugin-styled-components",
     "gatsby-plugin-image",
+    `gatsby-plugin-smoothscroll`,
     "gatsby-plugin-react-helmet",
     {
       resolve: "gatsby-plugin-manifest",
