@@ -93,4 +93,4 @@ export interface ProjectItem {
   body: string;
 }
 
-export const STAR_NUMBER = 30;
+export const STAR_NUMBER = 40;

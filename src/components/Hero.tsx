@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 import uuid from "uuid";
 
-import star_two from "../images/Star2.png";
+import star_two from "../images/Star3.png";
 
 const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
 const windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
