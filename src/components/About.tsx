@@ -2,13 +2,12 @@ import { graphql, useStaticQuery } from "gatsby";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import {
-  Wrapper,
-  Heading,
-  Accordion,
-  AccordionItem,
-  TechnologiesItem,
-} from "./index";
+// @ts-ignore:disable-next-line
+import { Wrapper, Heading } from "@components/Utils";
+// @ts-ignore:disable-next-line
+import Accordion from "@components/Accordion";
+// @ts-ignore:disable-next-line
+import { AccordionItem, TechnologiesItem } from "@typesd/schema";
 
 const parseAbout = (data: any): AccordionItem[] => {
   return data.nodes.map((singleAbout: any) => ({

@@ -1,10 +1,9 @@
 import "../normalize.css";
-
 import React from "react";
-
-import Navbar from "./Navbar";
-
 import styled from "styled-components";
+
+// @ts-ignore:disable-next-line
+import Navbar from "@components/Navbar";
 
 const Layout: React.FC<{ children: React.FC }> = ({ children, ...props }) => {
   return (

@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled, { keyframes } from "styled-components";
-import { IStar, ScrollAnimation, STAR_NUMBER } from "./";
 
 import { motion } from "framer-motion";
-
 import uuid from "uuid";
-
-import star_two from "../images/Star3.png";
+// @ts-ignore:disable-next-line
+import star_two from "@images/Star3.png";
+// @ts-ignore:disable-next-line
+import ScrollAnimation from "@components/ScrollAnimation";
+// @ts-ignore:disable-next-line
+import { IStar } from "@typesd/schema";
 
 const windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
 const windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+const STAR_NUMBER = 40;
 
 const generateSingleStar = (x?: number, y?: number): IStar => {
   const id = uuid.v4();

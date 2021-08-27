@@ -1,6 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import { Icons } from ".";
+// @ts-ignore:disable-next-line
+import Icons from "@components/Icons";
+
+const THENOUNPROJECT_LINK = "https://thenounproject.com/";
+const ICONMONSTR = "https://iconmonstr.com/";
+
+const SOCIALS_LINK = [
+  {
+    name: "github",
+    link: "https://github.com/demic-dev",
+  },
+  {
+    name: "linkedin",
+    link: "https://www.linkedin.com/in/michele-de-cillis/",
+  },
+  {
+    name: "npm",
+    link: "https://www.npmjs.com/~demic.dev",
+  },
+];
 
 const Footer: React.FC = () => {
   return (
@@ -12,23 +31,19 @@ const Footer: React.FC = () => {
         </Link>
       </Description>
       <IconsContainer>
-        <Link href="https://github.com/demic-dev">
-          <Icons name="github" />
-        </Link>
-        <Link href="https://www.linkedin.com/in/michele-de-cillis/">
-          <Icons name="linkedin" />
-        </Link>
-        <Link href="https://www.npmjs.com/~demic.dev">
-          <Icons name="npm" fill={"orange"} background={"#000"} />
-        </Link>
+        {SOCIALS_LINK.map(({ name, link }) => (
+          <Link href={link} key={name}>
+            <Icons name={name} fill={"orange"} background={"#000"} />
+          </Link>
+        ))}
       </IconsContainer>
       <Description style={{ gridArea: "bottom-desc" }}>
         Icone:{" "}
-        <Link href="https://thenounproject.com/" target="_blank">
+        <Link href={THENOUNPROJECT_LINK} target="_blank">
           The Noun Project
         </Link>{" "}
         |{" "}
-        <Link href="https://iconmonstr.com/" target="_blank">
+        <Link href={ICONMONSTR} target="_blank">
           iconmonstr
         </Link>
       </Description>

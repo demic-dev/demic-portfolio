@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
-
-import { Wrapper, Heading, Icons, ProjectItem } from "./index";
 import { graphql, useStaticQuery } from "gatsby";
-
-import more from "../images/plus.svg";
+// @ts-ignore:disable-next-line
+import more from "@images/plus.svg";
+// @ts-ignore:disable-next-line
+import { Wrapper, Heading } from "@components/Utils";
+// @ts-ignore:disable-next-line
+import Icons from "@components/Icons";
+// @ts-ignore:disable-next-line
+import { ProjectItem } from "@typesd/schema";
 
 const variant = {
   initialExit: {
@@ -84,7 +88,8 @@ const Projects: React.FC = () => {
           {items.map((val) => (
             <ProjectContainer
               onClick={() => openModal(val)}
-              name={val.title} key={val.id}
+              name={val.title}
+              key={val.id}
             >
               <ProjectImage src={val.image} alt="Image" />
               <ProjectContentContainer>
@@ -264,7 +269,7 @@ const ModalContentContainer = styled.div`
   margin: 0 auto;
 
   word-spacing: 4px;
-  
+
   @media (min-width: 1000px) {
     width: 55%;
   }

@@ -1,9 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
-
-import { Heading } from "./index";
-import { Wrapper } from "./Utils";
+// @ts-ignore:disable-next-line
+import { Wrapper, Heading } from "@components/Utils";
 
 function encode(data) {
   return Object.keys(data)
@@ -15,7 +14,6 @@ const ContactMe: React.FC = () => {
   const [formData, setFormData] = useState<{ [key: string]: string }>();
   const [showResult, setIsShowingResult] = useState<{
     type?: boolean;
-    text?: string;
     isActive: boolean;
   }>({
     isActive: false,
@@ -30,8 +28,8 @@ const ContactMe: React.FC = () => {
     }));
   };
 
-  const handleResult = (type: boolean, text: string) => {
-    setIsShowingResult({ type: type, text: text, isActive: true });
+  const handleResult = (type: boolean) => {
+    setIsShowingResult({ type: type, isActive: true });
     setTimeout(() => {
       setIsShowingResult({ isActive: false });
     }, 4000);
@@ -49,23 +47,10 @@ const ContactMe: React.FC = () => {
         }),
       })
         .then((response) => {
-          if (response.status === 200)
-            handleResult(
-              true,
-              "Ho ricevuto il messaggio. Ti risponderò il prima possibile!"
-            );
-          else
-            handleResult(
-              false,
-              'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:decillismicheledeveloper@gmail.com">qui</a>.'
-            );
+          if (response.status === 200) handleResult(true);
+          else handleResult(false);
         })
-        .catch(() =>
-          handleResult(
-            false,
-            'Qualcosa è andato storto... Scrivimi <a style="color: #fff;" href="mailto:decillismicheledeveloper@gmail.com">qui</a>.'
-          )
-        );
+        .catch(() => handleResult(false));
   };
 
   return (
@@ -73,11 +58,11 @@ const ContactMe: React.FC = () => {
       <Heading title="Contattami" />
       <ContentWrapper>
         <Description>
-          Hai un progetto in mente?
+          Hai un progetto in mente? Oppure vuoi scrivermi?
           <br />
-          Posso aiutarti nella sua realizzazione!
-          <br /><br />
-          Compila il form accanto e parlami del tuo progetto. Ti risponderò il prima possibile.
+          <br />
+          Compila il form accanto e parlami del tuo progetto. Ti risponderò il
+          prima possibile.
         </Description>
         <FormContainer
           name="contact-me"
@@ -109,7 +94,22 @@ const ContactMe: React.FC = () => {
               transition={{ duration: 0.4, ease: "easeInOut" }}
               type={showResult.type}
             >
-              <div dangerouslySetInnerHTML={{ __html: showResult.text }} />
+              {showResult.type ? (
+                <div>
+                  Ho ricevuto il messaggio. Ti risponderò il prima possibile!
+                </div>
+              ) : (
+                <div>
+                  Qualcosa è andato storto... Scrivimi{" "}
+                  <a
+                    style={{ color: "white" }}
+                    href="mailto:decillismicheledeveloper@gmail.com"
+                  >
+                    qui
+                  </a>
+                  .
+                </div>
+              )}
               <SubmissionLine
                 initial={{ width: "100%" }}
                 animate={{ width: 0 }}

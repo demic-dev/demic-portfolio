@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import scrollTo from 'gatsby-plugin-smoothscroll';
 import { Link } from "gatsby";
-
-
-import { Icons } from ".";
+// @ts-ignore:disable-next-line
+import Icons from "@components/Icons";
 
 const LINKS = [
   {

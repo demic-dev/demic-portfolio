@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 
 module.exports = {
   siteMetadata: {
@@ -9,13 +10,12 @@ module.exports = {
   },
   plugins: [
     "gatsby-plugin-styled-components",
-    "gatsby-plugin-image",
     `gatsby-plugin-smoothscroll`,
     "gatsby-plugin-react-helmet",
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "src/images/icon.png",
+        icon: "assets/images/icon.png",
       },
     },
     "gatsby-plugin-sharp",
@@ -24,7 +24,7 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "images",
-        path: "./src/images/",
+        path: "./assets/images/",
       },
       __key: "images",
     },
@@ -36,5 +36,19 @@ module.exports = {
       },
     },
     "gatsby-transformer-remark",
+    {
+      resolve: `gatsby-plugin-alias-imports`,
+      options: {
+        alias: {
+          "@typesd": path.resolve(__dirname, '/types'),
+          "@components": path.resolve(__dirname, '/src/components'),
+          "@images": path.resolve(__dirname, '/assets/images/'),
+        },
+        extensions: [
+          "js", "jsx", "ts", "tsx"
+        ]
+      }
+    },
+    `gatsby-plugin-tsconfig-paths`,
   ],
 };

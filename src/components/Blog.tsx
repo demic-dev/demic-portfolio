@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-
-import { PostItem, Wrapper } from ".";
 import { graphql, useStaticQuery } from "gatsby";
+// @ts-ignore:disable-next-line
+import { Wrapper } from "@components/Utils";
+// @ts-ignore:disable-next-line
+import { PostItem } from "@typesd/schema";
 
 const variants = {
   enter: (direction: number) => {
@@ -26,24 +28,6 @@ const variants = {
     };
   },
 };
-
-// const POSTS = [
-//   {
-//     id: "1",
-//     title: "Post #1",
-//     description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox.`,
-//   },
-//   {
-//     id: "2",
-//     title: "Post #2",
-//     description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps.`,
-//   },
-//   {
-//     id: "3",
-//     title: "Post #3",
-//     description: `The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex!`,
-//   },
-// ];
 
 const swipeConfidenceThreshold = 10000;
 const swipePower = (offset: number, velocity: number) => {
@@ -75,7 +59,7 @@ const Blog: React.FC = () => {
       curIndex[0] > newIndex ? -1 : 1,
     ]);
 
-  const data = useStaticQuery(graphql`
+    const data = useStaticQuery(graphql`
     {
       allContentfulBlogPostMinified(limit: 4, sort: { fields: createdAt }) {
         nodes {

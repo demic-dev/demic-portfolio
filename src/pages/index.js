@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
-import {
-  Layout,
-  Hero,
-  About,
-  Projects,
-  ContactMe,
-  // StartAnimation,
-  Footer,
-  Blog,
-  Seo,
-} from "../components";
+import Layout from "@components/Layout";
+import Hero from "@components/Hero";
+import About from "@components/About";
+import Projects from "@components/Projects";
+import ContactMe from "@components/ContactMe";
+import Footer from "@components/Footer";
+import Blog from "@components/Blog";
+import Seo from "@components/Seo";
 
 console.log(
   "%cEhm... Questo non dovresti vederlo",
@@ -19,12 +16,6 @@ console.log(
 );
 
 const IndexPage = () => {
-  const [isVisible /* setIsVisible */] = useState(false);
-
-  // const handleAnimationEnd = (e) => {
-  //   e.animationName === "fillLetters" && setIsVisible(false);
-  // };
-
   return (
     <>
       <Seo
@@ -33,11 +24,11 @@ const IndexPage = () => {
         meta={[
           {
             name: "google-site-verification",
-            content: "r4D84aKED3g2-coyMmr7B3HW6Ml-BBSwGYRSRlVT1pY",
+            content: process.env.GOOGLE_SITE_VERIFICATION,
           },
         ]}
       />
-      <Layout style={{ display: isVisible ? "none" : "block" }}>
+      <Layout>
         <Main>
           <Hero />
           <About />
@@ -50,8 +41,6 @@ const IndexPage = () => {
     </>
   );
 };
-
-/* <StartAnimation handleAnimationEnd={handleAnimationEnd} /> */
 
 export default IndexPage;
 

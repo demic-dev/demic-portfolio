@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-
-import { AboutItemProps, AccordionProps, Icons } from "./index";
+// @ts-ignore:disable-next-line
+import Icons from "@components/Icons";
+// @ts-ignore:disable-next-line
+import { AccordionProps, AboutItemProps } from "@typesd/schema";
 
 const AccordionItem: React.FC<AboutItemProps> = ({
   item,
@@ -11,12 +13,13 @@ const AccordionItem: React.FC<AboutItemProps> = ({
   setExpanded,
 }) => {
   const isOpen = index === isExpanded;
+  const handleAccordionClick = () => setExpanded(isOpen ? false : index);
 
   return (
     <>
       <AccordionItemHeaderContainer
         initial={false}
-        onClick={() => setExpanded(isOpen ? false : index)}
+        onClick={handleAccordionClick}
         animate={{
           backgroundColor: isOpen ? "rgba(0,0,0, 0.95)" : "transparent",
         }}
@@ -105,6 +108,6 @@ const ArrowIconContainer = styled.div<{ isSelected: boolean }>`
 
 const AccordionItemBody = styled(motion.div)`
   padding: 0.6rem 1rem;
-  
+
   line-height: 120%;
 `;

@@ -1,5 +1,6 @@
 import React from "react";
-import { ClickType, IIcons, IconColors } from ".";
+// @ts-ignore:disable-next-line
+import { ClickType, IIcons, IconColors } from "@typesd/schema";
 
 type IconsComponentProps = IIcons & ClickType & IconColors;
 
